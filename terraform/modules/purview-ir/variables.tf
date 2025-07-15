@@ -1,24 +1,18 @@
-variable "purview_name" {
+variable "purview_id" {
   type = string
 }
 
-variable "mir_name" {
-  type = string
+variable "ir_name" {
+  type    = string
+  default = "managed-ir"
 }
 
 variable "mir_description" {
-  type = string
+  type    = string
   default = "created by terraform"
 }
 
-variable "arm_tenant_id" {
-  type = string
-}
-
-variable "arm_client_id" {
-  type = string
-}
-
-variable "arm_client_secret" {
-  type = string
+variable "kind" {
+  type    = string
+  default = "Managed"
 }
