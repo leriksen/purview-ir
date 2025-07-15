@@ -6,21 +6,17 @@ module "purview_account" {
   location            = azurerm_resource_group.rg.location
 }
 
-module "purview_ir" {
+module "purview_shir" {
   source = "./modules/purview-ir"
 
   purview_id = trimprefix(module.purview_account.scan_endpoint, "https://")
   kind       = "SelfHosted"
 }
 
-output ir_name {
-  value = module.purview_ir.name
+module "purview_mir" {
+  source = "./modules/purview-ir"
+
+  purview_id = trimprefix(module.purview_account.scan_endpoint, "https://")
+  kind       = "Managed"
 }
 
-output ir_id {
-  value = module.purview_ir.id
-}
-
-output ir_properties {
-  value = module.purview_ir.properties
-}
