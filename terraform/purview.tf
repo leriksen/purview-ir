@@ -31,10 +31,19 @@ module "purview_mvnet" {
   arm_client_secret = var.arm_client_secret
 }
 
-output "mvnets" {
-  value = module.purview_mvnet.values
+module "purview_adls_pe" {
+  source        = "./modules/purview-managed-endpoint"
+  mvnet_name    = "leriksen-purview.purview.azure.com/scan/managedvirtualnetworks/ManagedVnet-Exz"
+  name          = "adls"
+  resource_id   = azurerm_storage_account.adls.id
+  resource_kind = "sa"
+  subresource   = "dfs"
 }
 
-output "mvnet_name" {
-  value = module.purview_mvnet.values.name
+output managed_pe {
+  value = module.purview_adls_pe.managed_pe
+}
+
+output "pe" {
+  value = module.purview_adls_pe.pe
 }
