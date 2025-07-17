@@ -25,9 +25,16 @@ module "purview_account" {
 module "purview_mvnet" {
   source = "./modules/purview-managed-vnets"
 
-  purview_id = trimprefix(module.purview_account.scan_endpoint, "https://")
+  purview_name      = module.purview_account.name
+  arm_tenant_id     = var.arm_tenant_id
+  arm_client_id     = var.arm_client_id
+  arm_client_secret = var.arm_client_secret
 }
 
 output "mvnets" {
   value = module.purview_mvnet.values
+}
+
+output "mvnet_name" {
+  value = module.purview_mvnet.values.name
 }
