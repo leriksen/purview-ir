@@ -33,17 +33,9 @@ module "purview_mvnet" {
 
 module "purview_adls_pe" {
   source        = "./modules/purview-managed-endpoint"
-  mvnet_name    = "leriksen-purview.purview.azure.com/scan/managedvirtualnetworks/ManagedVnet-Exz"
+  mvnet_name    = format("%s/managedvirtualnetworks/%s", trimprefix(module.purview_account.scan_endpoint, "https://"), module.purview_mvnet.name)
   name          = "adls"
   resource_id   = azurerm_storage_account.adls.id
   resource_kind = "sa"
   subresource   = "dfs"
-}
-
-output managed_pe {
-  value = module.purview_adls_pe.managed_pe
-}
-
-output "pe" {
-  value = module.purview_adls_pe.pe
 }
