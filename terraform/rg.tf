@@ -1,4 +1,4 @@
 resource "azurerm_resource_group" "rg" {
   location = module.globals.location
-  name     = "purview"
+  name     = format("%s-%s", "purview", random_string.suffix.result)
 }
