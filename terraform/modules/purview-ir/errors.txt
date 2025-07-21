@@ -1,3 +1,26 @@
+create cusdtom named mvnet
+
+{
+  "properties": {
+    "preventDataExfiltration": false,
+    "location": "AustraliaEast"
+  },
+  "id": "/subscriptions/53f58ed1-10a8-41fb-bfcc-a61cef740a59/resourceGroups/rg-kubernetesruntime-vnet-59ec6b63-f144-46dc-bb24-8edd76857b06/providers/Microsoft.Network/virtualNetworks/vnet-59ec6b63-f144-46dc-bb24-8edd76857b06",
+  "name": "custom_mvnet"
+}
+
+According to the doco, it should return a structure with this
+{
+  "name": "defaultv2",
+  "properties": {
+    "vNetId": "myVNetId",
+    "alias": "myVNetAlias"
+  }
+}
+https://learn.microsoft.com/en-us/rest/api/purview/scanningdataplane/managed-virtual-networks/get?view=rest-purview-scanningdataplane-2023-09-01&tabs=HTTP#managedvirtualnetworkproperties
+
+With the vnet id, I dont think we can create the MIR and associate it with the MVNET
+
 as per doco, just use kind: "Managed"
 {
   "error": {
