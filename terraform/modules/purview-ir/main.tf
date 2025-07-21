@@ -6,8 +6,11 @@ resource azapi_data_plane_resource "this" {
   body = {
     kind       = var.kind
     properties = {
-      description                    = var.ir_description
-      managedVirtualNetworkReference = var.mvnet_reference
+      description           = var.ir_description
+      managedVirtualNetwork = {
+        referenceName = var.mvnet_reference
+        type          = "ManagedVirtualNetworkReference"
+      }
     }
   }
 

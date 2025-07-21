@@ -20,21 +20,21 @@ module "purview_mvnet" {
     module.purview_account
   ]
   purview_name       = trimprefix(module.purview_account.scan_endpoint, "https://")
-  purview_mvnet_name = "custom_mvnet"
+  purview_mvnet_name = "defaultv2"
 }
 
 output "mvnet" {
   value = module.purview_mvnet.mvnet
 }
 
-# module "purview_mir" {
-#   source = "./modules/purview-ir"
-#
-#   purview_id      = trimprefix(module.purview_account.scan_endpoint, "https://")
-#   kind            = "Managed"
-#   ir_name         = "MIR"
-#   mvnet_reference = module.purview_mvnet.id
-# }
+module "purview_mir" {
+  source = "./modules/purview-ir"
+
+  purview_id      = trimprefix(module.purview_account.scan_endpoint, "https://")
+  kind            = "Managed"
+  ir_name         = "MIR"
+  mvnet_reference = module.purview_mvnet.mvnet.name
+}
 
 # module "purview_adls_pe" {
 #   source        = "./modules/purview-managed-endpoint"

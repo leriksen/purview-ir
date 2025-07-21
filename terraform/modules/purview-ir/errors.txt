@@ -1,72 +1,32 @@
-create cusdtom named mvnet
+created a MIR
+1 - make sure to set account as default (will do more testing validate if this is really required)
+2 - interpolate the MVNET result into the MIR body
+3 - wait for MVNET to establish (will determine appropriate timing later)
+4 - create MIR
 
 {
   "properties": {
     "preventDataExfiltration": false,
     "location": "AustraliaEast"
   },
-  "id": "/subscriptions/53f58ed1-10a8-41fb-bfcc-a61cef740a59/resourceGroups/rg-kubernetesruntime-vnet-59ec6b63-f144-46dc-bb24-8edd76857b06/providers/Microsoft.Network/virtualNetworks/vnet-59ec6b63-f144-46dc-bb24-8edd76857b06",
-  "name": "custom_mvnet"
+  "id": "/subscriptions/53f58ed1-10a8-41fb-bfcc-a61cef740a59/resourceGroups/rg-kubernetesruntime-vnet-95afc6fb-aa21-8aa8-0869-2de607f684c3/providers/Microsoft.Network/virtualNetworks/vnet-95afc6fb-aa21-8aa8-0869-2de607f684c3",
+  "name": "defaultv2"
 }
-
-According to the doco, it should return a structure with this
 {
-  "name": "defaultv2",
   "properties": {
-    "vNetId": "myVNetId",
-    "alias": "myVNetAlias"
-  }
-}
-https://learn.microsoft.com/en-us/rest/api/purview/scanningdataplane/managed-virtual-networks/get?view=rest-purview-scanningdataplane-2023-09-01&tabs=HTTP#managedvirtualnetworkproperties
-
-With the vnet id, I dont think we can create the MIR and associate it with the MVNET
-
-as per doco, just use kind: "Managed"
-{
-  "error": {
-    "code": "IntegrationRuntime_Invalid",
-    "message": "New VNetIR under manged vnet default is disallowed, please create VNetIR under other managed vnets",
-    "target": null,
-    "details": []
-  }
-}
-
-create a MIR, and set managed vnet to defaultv2 (did not explicitly create MVNET)
-Error creating MIR.
-{
-  "error": {
-    "code": "IntegrationRuntime_UserError",
-    "message": "[Activity: a13eaee2-686a-4470-a320-8249088f977b] Unexcpected HTTP Status Code: BadRequest, ErrorCode: None, Message: VNet Runtime MIR cannot be created under purview account leriksen-purview since the vnet defaultv2 is not ready.",
-    "target": null,
-    "details": [
-      {
-        "code": "IntegrationRuntime_UserError",
-        "message": "[Activity: a13eaee2-686a-4470-a320-8249088f977b] Unexcpected HTTP Status Code: BadRequest, ErrorCode: None, Message: VNet Runtime MIR cannot be created under purview account leriksen-purview since the vnet defaultv2 is not ready.",
-        "target": null,
-        "details": null
+    "typeProperties": {
+      "computeProperties": {
+        "location": "AustraliaEast"
       }
-    ]
-  }
+    },
+    "managedVirtualNetwork": {
+      "referenceName": "defaultv2",
+      "type": "ManagedVirtualNetworkReference"
+    },
+    "description": "created by terraform"
+  },
+  "kind": "Managed",
+  "name": "MIR"
 }
 
-create MVNET called defaultv2
-Error creating MVNET.
-{
-  "error": {
-    "code": "ManagedVNetSystemError",
-    "message": "[Activity: d4f6d516-a909-4a65-a23e-0651e91000a8] Unexcpected HTTP Status Code: InternalServerError, ErrorCode: None, Message: Managed vnet defaultv2 cannot be created under purview account leriksen-purview, please use a different name or contact Microsoft Support.",
-    "target": null,
-    "details": null
-  }
-}
-
-create MVNET called default
-Error creating MVNET with name default.
-{
-  "error": {
-    "code": "ManagedVNet_OperationNotAllowed",
-    "message": "Managed vnet name default is system reserved, please specify another name",
-    "target": null,
-    "details": []
-  }
-}
+To come - automate the approval of the storage and account PE requests
