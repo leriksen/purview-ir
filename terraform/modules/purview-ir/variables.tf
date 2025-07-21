@@ -1,18 +1,23 @@
-variable "purview_id" {
+variable purview_id {
   type = string
 }
 
-variable "ir_name" {
+variable ir_name {
   type    = string
   default = "managed-ir"
 }
 
-variable "mir_description" {
+variable ir_description {
   type    = string
   default = "created by terraform"
 }
 
-variable "kind" {
+variable kind {
   type    = string
   default = "Managed"
+}
+
+variable mvnet_reference {
+  type    = string
+  default = null
 }
