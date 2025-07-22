@@ -2,6 +2,14 @@ variable purview_id {
   type = string
 }
 
+variable purview_endpoint {
+  type = string
+}
+
+variable purview_managed_storage {
+  type = string
+}
+
 variable ir_name {
   type    = string
   default = "managed-ir"

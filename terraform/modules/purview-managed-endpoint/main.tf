@@ -25,7 +25,13 @@ resource time_sleep "wait" {
 }
 
 resource azapi_update_resource "approve_pl" {
-  name = local.pl_name
+  for_each = local.pl_name
+
+  depends_on = [
+    time_sleep.wait
+  ]
+
+  name = each.value
   parent_id = azapi_data_plane_resource.managed_pe.output.properties.privateLinkResourceId
   type = local.kind_api[var.resource_kind]
   body = {
