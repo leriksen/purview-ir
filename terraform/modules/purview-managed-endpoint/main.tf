@@ -1,6 +1,6 @@
 resource azapi_data_plane_resource "managed_pe" {
   name      = var.name
-  parent_id = var.mvnet_name
+  parent_id = format("%s/managedvirtualnetworks/%s", var.purview_endpoint, var.mvnet_name)
   type      = "Microsoft.Purview/accounts/Scanning/managedvirtualnetworks/managedprivateendpoints@2023-09-01"
 
   body = {
@@ -17,12 +17,12 @@ resource azapi_data_plane_resource "managed_pe" {
   ]
 }
 
-# resource time_sleep "sleep_240s" {
-#   create_duration = "240s"
-#   depends_on = [
-#     azapi_data_plane_resource.this
-#   ]
-# }
+resource time_sleep "wait" {
+  create_duration = "240s"
+  depends_on = [
+    azapi_data_plane_resource.managed_pe
+  ]
+}
 
 resource azapi_update_resource "approve_pl" {
   name = local.pl_name

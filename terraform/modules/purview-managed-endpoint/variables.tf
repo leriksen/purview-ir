@@ -2,6 +2,10 @@ variable name {
   type = string
 }
 
+variable purview_endpoint {
+  type = string
+}
+
 variable mvnet_name {
   type = string
 }
