@@ -25,7 +25,7 @@ resource azapi_data_plane_resource "mir" {
 #
 # these also need to have their private links approved
 #
-# create purview account private endpoint connection
+# create and approve purview account private endpoint connection
 module "account_pe" {
   source = "../purview-managed-endpoint"
 
@@ -40,7 +40,7 @@ module "account_pe" {
   subresource      = "account"
 }
 
-# create purview managed storage account blob private endpoint connection
+# create and approve purview managed storage account blob private endpoint connection
 module "storage_blob_pe" {
   source = "../purview-managed-endpoint"
 
@@ -55,7 +55,7 @@ module "storage_blob_pe" {
   subresource      = "blob"
 }
 
-# create purview managed storage account queue account private endpoint connection
+# create and approve purview managed storage account queue account private endpoint connection
 module "storage_queue_pe" {
   source = "../purview-managed-endpoint"
 
@@ -69,4 +69,3 @@ module "storage_queue_pe" {
   resource_kind    = "sa"
   subresource      = "queue"
 }
-

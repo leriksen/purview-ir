@@ -29,7 +29,7 @@ module "purview_mir" {
     time_sleep.wait
   ]
 
-  purview_endpoint        = trimprefix(module.purview_account.scan_endpoint, "https://")
+  purview_endpoint        = local.purview_endpoint
   purview_id              = module.purview_account.id
   purview_managed_storage = module.purview_account.managed_resources[0].storage_account_id
   kind                    = "Managed"
@@ -37,56 +37,41 @@ module "purview_mir" {
   mvnet_reference         = module.purview_mvnet.mvnet.name
 }
 
-output "mir_output" {
-  value = module.purview_mir.result
+module "purview_adls_pe" {
+  depends_on = [
+    time_sleep.wait
+  ]
+  source           = "./modules/purview-managed-endpoint"
+  purview_endpoint = local.purview_endpoint
+  mvnet_name       = module.purview_mvnet.mvnet.name
+  name             = "adls"
+  resource_id      = azurerm_storage_account.adls.id
+  resource_kind    = "sa"
+  subresource      = "dfs"
 }
 
-output "account_managed_pe" {
-  value = module.purview_mir.account_managed_pe
-}
-
-output "storage_blob_managed_pe" {
-  value = module.purview_mir.storage_blob_managed_pe
-}
-
-output "storage_queue_managed_pe" {
-  value = module.purview_mir.storage_queue_managed_pe
-}
-
-output account_data {
-  value = module.purview_mir.account_data_azapi_resource_pe
-}
-
-output storage_blob {
-  value = module.purview_mir.storage_blob_data_azapi_resource_pe
-}
-
-output storage_queue {
-  value = module.purview_mir.storage_queue_data_azapi_resource_pe
-}
-
-# output "approved_account_managed_pe" {
-#   value = module.purview_mir.approved_account_managed_pe
-# }
-#
-# output "approved_storage_blob_managed_pe" {
-#   value = module.purview_mir.approved_storage_blob_managed_pe
-# }
-#
-# output "approved_storage_queue_managed_pe" {
-#   value = module.purview_mir.approved_storage_queue_managed_pe
-# }
-
-# module "purview_adls_pe" {
+# key vaults have a different schema for representing their PE approval requests....
+# module "purview_kv_pe" {
+#   depends_on = [
+#     time_sleep.wait
+#   ]
 #   source           = "./modules/purview-managed-endpoint"
-#   purview_endpoint = trimprefix(module.purview_account.scan_endpoint, "https://")
+#   purview_endpoint = local.purview_endpoint
 #   mvnet_name       = module.purview_mvnet.mvnet.name
-#   name             = "adls"
-#   resource_id      = azurerm_storage_account.adls.id
-#   resource_kind    = "sa"
-#   subresource      = "dfs"
+#   name             = "kv"
+#   resource_id      = azurerm_key_vault.kv.id
+#   resource_kind    = "kv"
+#   subresource      = "vault"
 # }
 #
-# output "managed_pe" {
-#   value = module.purview_adls_pe.managed_pe
+# output "kv_managed_pe" {
+#   value = module.purview_kv_pe.managed_pe
+# }
+#
+# output kv_query {
+#   value = module.purview_kv_pe.query
+# }
+#
+# output kv_resource_id {
+#   value = module.purview_kv_pe.resource_id
 # }
