@@ -1,32 +1,266 @@
 created a MIR
-1 - make sure to set account as default (will do more testing validate if this is really required)
-2 - interpolate the MVNET result into the MIR body
-3 - wait for MVNET to establish (will determine appropriate timing later)
-4 - create MIR
+tfaaa
 
-{
-  "properties": {
-    "preventDataExfiltration": false,
-    "location": "AustraliaEast"
-  },
-  "id": "/subscriptions/53f58ed1-10a8-41fb-bfcc-a61cef740a59/resourceGroups/rg-kubernetesruntime-vnet-95afc6fb-aa21-8aa8-0869-2de607f684c3/providers/Microsoft.Network/virtualNetworks/vnet-95afc6fb-aa21-8aa8-0869-2de607f684c3",
-  "name": "defaultv2"
-}
-{
-  "properties": {
-    "typeProperties": {
-      "computeProperties": {
-        "location": "AustraliaEast"
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # azurerm_resource_group.rg will be created
+  + resource "azurerm_resource_group" "rg" {
+      + id       = (known after apply)
+      + location = "australiaeast"
+      + name     = (known after apply)
+    }
+
+  # random_string.suffix will be created
+  + resource "random_string" "suffix" {
+      + id          = (known after apply)
+      + length      = 4
+      + lower       = true
+      + min_lower   = 0
+      + min_numeric = 0
+      + min_special = 0
+      + min_upper   = 0
+      + number      = false
+      + numeric     = false
+      + result      = (known after apply)
+      + special     = false
+      + upper       = false
+    }
+
+  # module.purview_account.azurerm_purview_account.account will be created
+  + resource "azurerm_purview_account" "account" {
+      + atlas_kafka_endpoint_primary_connection_string   = (sensitive value)
+      + atlas_kafka_endpoint_secondary_connection_string = (sensitive value)
+      + aws_external_id                                  = (known after apply)
+      + catalog_endpoint                                 = (known after apply)
+      + guardian_endpoint                                = (known after apply)
+      + id                                               = (known after apply)
+      + location                                         = "australiaeast"
+      + managed_event_hub_enabled                        = true
+      + managed_resource_group_name                      = (known after apply)
+      + managed_resources                                = (known after apply)
+      + name                                             = (known after apply)
+      + public_network_enabled                           = true
+      + resource_group_name                              = (known after apply)
+      + scan_endpoint                                    = (known after apply)
+
+      + identity {
+          + principal_id = (known after apply)
+          + tenant_id    = (known after apply)
+          + type         = "SystemAssigned"
+        }
+    }
+
+  # module.purview_mir.azapi_data_plane_resource.this will be created
+  + resource "azapi_data_plane_resource" "this" {
+      + body                    = {
+          + kind       = "Managed"
+          + properties = {
+              + description           = "created by terraform"
+              + managedVirtualNetwork = {
+                  + referenceName = (known after apply)
+                  + type          = "ManagedVirtualNetworkReference"
+                }
+            }
+        }
+      + id                      = (known after apply)
+      + ignore_casing           = false
+      + ignore_missing_property = true
+      + name                    = "MIR"
+      + output                  = (known after apply)
+      + parent_id               = (known after apply)
+      + response_export_values  = [
+          + "*",
+        ]
+      + type                    = "Microsoft.Purview/accounts/Scanning/integrationruntimes@2023-09-01"
+    }
+
+  # module.purview_mvnet.azapi_data_plane_resource.mvnet will be created
+  + resource "azapi_data_plane_resource" "mvnet" {
+      + body                    = {
+          + properties = {}
+        }
+      + id                      = (known after apply)
+      + ignore_casing           = false
+      + ignore_missing_property = true
+      + name                    = "defaultv2"
+      + output                  = (known after apply)
+      + parent_id               = (known after apply)
+      + response_export_values  = [
+          + "*",
+        ]
+      + type                    = "Microsoft.Purview/accounts/Scanning/managedvirtualnetworks@2023-09-01"
+    }
+
+  # module.purview_mvnet.time_sleep.wait will be created
+  + resource "time_sleep" "wait" {
+      + create_duration = "180s"
+      + id              = (known after apply)
+    }
+
+Plan: 6 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + purview_mir = (known after apply)
+random_string.suffix: Creating...
+random_string.suffix: Creation complete after 0s [id=dqyy]
+azurerm_resource_group.rg: Creating...
+azurerm_resource_group.rg: Creation complete after 9s [id=/subscriptions/743b758a-f6e7-4823-b706-950a64a6c9f9/resourceGroups/purview-dqyy]
+module.purview_account.azurerm_purview_account.account: Creating...
+module.purview_account.azurerm_purview_account.account: Still creating... [10s elapsed]
+module.purview_account.azurerm_purview_account.account: Still creating... [20s elapsed]
+module.purview_account.azurerm_purview_account.account: Still creating... [30s elapsed]
+module.purview_account.azurerm_purview_account.account: Still creating... [40s elapsed]
+module.purview_account.azurerm_purview_account.account: Still creating... [50s elapsed]
+module.purview_account.azurerm_purview_account.account: Still creating... [1m0s elapsed]
+module.purview_account.azurerm_purview_account.account: Still creating... [1m10s elapsed]
+module.purview_account.azurerm_purview_account.account: Still creating... [1m20s elapsed]
+module.purview_account.azurerm_purview_account.account: Still creating... [1m30s elapsed]
+module.purview_account.azurerm_purview_account.account: Still creating... [1m40s elapsed]
+module.purview_account.azurerm_purview_account.account: Still creating... [1m50s elapsed]
+module.purview_account.azurerm_purview_account.account: Still creating... [2m0s elapsed]
+module.purview_account.azurerm_purview_account.account: Still creating... [2m10s elapsed]
+module.purview_account.azurerm_purview_account.account: Still creating... [2m20s elapsed]
+module.purview_account.azurerm_purview_account.account: Still creating... [2m30s elapsed]
+module.purview_account.azurerm_purview_account.account: Still creating... [2m40s elapsed]
+module.purview_account.azurerm_purview_account.account: Still creating... [2m50s elapsed]
+module.purview_account.azurerm_purview_account.account: Still creating... [3m0s elapsed]
+module.purview_account.azurerm_purview_account.account: Creation complete after 3m10s [id=/subscriptions/743b758a-f6e7-4823-b706-950a64a6c9f9/resourceGroups/purview-dqyy/providers/Microsoft.Purview/accounts/leriksen-purview-dqyy]
+module.purview_mvnet.azapi_data_plane_resource.mvnet: Creating...
+module.purview_mvnet.azapi_data_plane_resource.mvnet: Creation complete after 3s [id=leriksen-purview-dqyy.purview.azure.com/scan/managedvirtualnetworks/defaultv2]
+module.purview_mvnet.time_sleep.wait: Creating...
+module.purview_mir.azapi_data_plane_resource.this: Creating...
+module.purview_mvnet.time_sleep.wait: Still creating... [10s elapsed]
+module.purview_mvnet.time_sleep.wait: Still creating... [20s elapsed]
+module.purview_mvnet.time_sleep.wait: Still creating... [30s elapsed]
+module.purview_mvnet.time_sleep.wait: Still creating... [40s elapsed]
+module.purview_mvnet.time_sleep.wait: Still creating... [50s elapsed]
+module.purview_mvnet.time_sleep.wait: Still creating... [1m0s elapsed]
+module.purview_mvnet.time_sleep.wait: Still creating... [1m10s elapsed]
+module.purview_mvnet.time_sleep.wait: Still creating... [1m20s elapsed]
+module.purview_mvnet.time_sleep.wait: Still creating... [1m30s elapsed]
+module.purview_mvnet.time_sleep.wait: Still creating... [1m40s elapsed]
+module.purview_mvnet.time_sleep.wait: Still creating... [1m50s elapsed]
+module.purview_mvnet.time_sleep.wait: Still creating... [2m0s elapsed]
+module.purview_mvnet.time_sleep.wait: Still creating... [2m10s elapsed]
+module.purview_mvnet.time_sleep.wait: Still creating... [2m20s elapsed]
+module.purview_mvnet.time_sleep.wait: Still creating... [2m30s elapsed]
+module.purview_mvnet.time_sleep.wait: Still creating... [2m40s elapsed]
+module.purview_mvnet.time_sleep.wait: Still creating... [2m50s elapsed]
+module.purview_mvnet.time_sleep.wait: Creation complete after 3m0s [id=2025-07-22T00:58:17Z]
+╷
+│ Error: Failed to create/update resource
+│
+│   with module.purview_mir.azapi_data_plane_resource.this,
+│   on modules/purview-ir/main.tf line 1, in resource "azapi_data_plane_resource" "this":
+│    1: resource azapi_data_plane_resource "this" {
+│
+│ creating/updating "Resource: (ResourceId \"leriksen-purview-dqyy.purview.azure.com/scan/integrationruntimes/MIR\" / Api Version \"2023-09-01\")": PUT https://leriksen-purview-dqyy.purview.azure.com/scan/integrationruntimes/MIR
+│ --------------------------------------------------------------------------------
+│ RESPONSE 400: 400 Bad Request
+│ ERROR CODE: IntegrationRuntime_UserError
+│ --------------------------------------------------------------------------------
+│ {
+│   "error": {
+│     "code": "IntegrationRuntime_UserError",
+│     "message": "[Activity: 28c3ceab-277c-9628-838c-1d1b68af5805] Unexcpected HTTP Status Code: BadRequest, ErrorCode: None, Message: VNet Runtime MIR cannot be created under purview account leriksen-purview-dqyy since the vnet defaultv2 is not ready.",
+│     "target": null,
+│     "details": [
+│       {
+│         "code": "IntegrationRuntime_UserError",
+│         "message": "[Activity: 28c3ceab-277c-9628-838c-1d1b68af5805] Unexcpected HTTP Status Code: BadRequest, ErrorCode: None, Message: VNet Runtime MIR cannot be created under purview account leriksen-purview-dqyy since the vnet defaultv2 is not ready.",
+│         "target": null,
+│         "details": null
+│       }
+│     ]
+│   }
+│ }
+│ --------------------------------------------------------------------------------
+│
+╵
+❯ tfaaa
+random_string.suffix: Refreshing state... [id=dqyy]
+azurerm_resource_group.rg: Refreshing state... [id=/subscriptions/743b758a-f6e7-4823-b706-950a64a6c9f9/resourceGroups/purview-dqyy]
+module.purview_account.azurerm_purview_account.account: Refreshing state... [id=/subscriptions/743b758a-f6e7-4823-b706-950a64a6c9f9/resourceGroups/purview-dqyy/providers/Microsoft.Purview/accounts/leriksen-purview-dqyy]
+module.purview_mvnet.azapi_data_plane_resource.mvnet: Refreshing state... [id=leriksen-purview-dqyy.purview.azure.com/scan/managedvirtualnetworks/defaultv2]
+module.purview_mvnet.time_sleep.wait: Refreshing state... [id=2025-07-22T00:58:17Z]
+
+Note: Objects have changed outside of Terraform
+
+Terraform detected the following changes made outside of Terraform since the last "terraform apply" which may have affected this plan:
+
+  # module.purview_mvnet.azapi_data_plane_resource.mvnet has changed
+  ~ resource "azapi_data_plane_resource" "mvnet" {
+        id                      = "leriksen-purview-dqyy.purview.azure.com/scan/managedvirtualnetworks/defaultv2"
+        name                    = "defaultv2"
+      ~ output                  = {
+          + id         = "/subscriptions/ad457e45-ae6d-4f7e-975a-b86abd196065/resourceGroups/rg-kubernetesruntime-vnet-ab37b1de-8c53-d3ff-b110-8186ad319701/providers/Microsoft.Network/virtualNetworks/vnet-ab37b1de-8c53-d3ff-b110-8186ad319701"
+            name       = "defaultv2"
+            # (1 unchanged attribute hidden)
+        }
+        # (6 unchanged attributes hidden)
+    }
+
+
+Unless you have made equivalent changes to your configuration, or ignored the relevant attributes using ignore_changes, the following plan may include actions to undo or respond to these changes.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # module.purview_mir.azapi_data_plane_resource.this will be created
+  + resource "azapi_data_plane_resource" "this" {
+      + body                    = {
+          + kind       = "Managed"
+          + properties = {
+              + description           = "created by terraform"
+              + managedVirtualNetwork = {
+                  + referenceName = "defaultv2"
+                  + type          = "ManagedVirtualNetworkReference"
+                }
+            }
+        }
+      + id                      = (known after apply)
+      + ignore_casing           = false
+      + ignore_missing_property = true
+      + name                    = "MIR"
+      + output                  = (known after apply)
+      + parent_id               = "leriksen-purview-dqyy.purview.azure.com/scan"
+      + response_export_values  = [
+          + "*",
+        ]
+      + type                    = "Microsoft.Purview/accounts/Scanning/integrationruntimes@2023-09-01"
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + purview_mir = (known after apply)
+module.purview_mir.azapi_data_plane_resource.this: Creating...
+module.purview_mir.azapi_data_plane_resource.this: Creation complete after 5s [id=leriksen-purview-dqyy.purview.azure.com/scan/integrationruntimes/MIR]
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+purview_mir = {
+  "kind" = "Managed"
+  "name" = "MIR"
+  "properties" = {
+    "description" = "created by terraform"
+    "managedVirtualNetwork" = {
+      "referenceName" = "defaultv2"
+      "type" = "ManagedVirtualNetworkReference"
+    }
+    "typeProperties" = {
+      "computeProperties" = {
+        "location" = "AustraliaEast"
       }
-    },
-    "managedVirtualNetwork": {
-      "referenceName": "defaultv2",
-      "type": "ManagedVirtualNetworkReference"
-    },
-    "description": "created by terraform"
-  },
-  "kind": "Managed",
-  "name": "MIR"
+    }
+  }
 }
-
-To come - automate the approval of the storage and account PE requests

@@ -14,9 +14,5 @@ resource azapi_data_plane_resource "this" {
     }
   }
 
-  response_export_values = [
-    "id",
-    "name",
-    "properties"
-  ]
+  response_export_values = ["*"]
 }

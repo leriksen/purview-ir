@@ -23,10 +23,6 @@ module "purview_mvnet" {
   purview_mvnet_name = "defaultv2"
 }
 
-output "mvnet" {
-  value = module.purview_mvnet.mvnet
-}
-
 module "purview_mir" {
   source = "./modules/purview-ir"
 
@@ -34,6 +30,10 @@ module "purview_mir" {
   kind            = "Managed"
   ir_name         = "MIR"
   mvnet_reference = module.purview_mvnet.mvnet.name
+}
+
+output "purview_mir" {
+  value = module.purview_mir.result
 }
 
 # module "purview_adls_pe" {
