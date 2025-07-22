@@ -23,8 +23,19 @@ module "purview_mvnet" {
   purview_mvnet_name = "defaultv2"
 }
 
+resource "time_sleep" "wait" {
+  depends_on = [
+    module.purview_mvnet
+  ]
+  create_duration = "300s"
+}
+
 module "purview_mir" {
   source = "./modules/purview-ir"
+
+  depends_on = [
+    time_sleep.wait
+  ]
 
   purview_id      = trimprefix(module.purview_account.scan_endpoint, "https://")
   kind            = "Managed"

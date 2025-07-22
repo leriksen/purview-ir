@@ -9,10 +9,3 @@ resource azapi_data_plane_resource "mvnet" {
 
   response_export_values = ["*"]
 }
-
-resource "time_sleep" "wait" {
-  depends_on = [
-    azapi_data_plane_resource.mvnet
-  ]
-  create_duration = "180s"
-}
