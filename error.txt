@@ -1,0 +1,15 @@
+{
+│   "error": {
+│     "code": "ManagedVNetUserError",
+│     "message": "[Activity: 34057af3-d918-3d3e-cddc-f5b7c2547e89] Unexcpected HTTP Status Code: BadRequest, ErrorCode: None, Message: Managed vnet custom_mvnet operation failed due to Delete Managed VNet custom_mvnet failed since it's referenced by VNet Runtime entity",
+│     "target": null,
+│     "details": [
+│       {
+│         "code": "ManagedVNetUserError",
+│         "message": "[Activity: 34057af3-d918-3d3e-cddc-f5b7c2547e89] Unexcpected HTTP Status Code: BadRequest, ErrorCode: None, Message: Managed vnet custom_mvnet operation failed due to Delete Managed VNet custom_mvnet failed since it's referenced by VNet Runtime entity",
+│         "target": null,
+│         "details": null
+│       }
+│     ]
+│   }
+│ }
