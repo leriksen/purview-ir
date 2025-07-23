@@ -18,9 +18,14 @@ resource azapi_data_plane_resource "managed_pe" {
 }
 
 resource azapi_update_resource "approve_pl" {
-  name = data.azapi_resource.pe.output.query
+  name = local.pe_name
   parent_id = azapi_data_plane_resource.managed_pe.output.properties.privateLinkResourceId
-  type = local.kind_api[var.resource_kind]
+  type = format(
+    "%s/%s@%s",
+    local.resource_api[var.resource_kind].endpoint,
+    "privateEndpointConnections",
+    local.resource_api[var.resource_kind].version
+  )
   body = {
     properties = {
       privateLinkServiceConnectionState = {
