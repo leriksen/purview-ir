@@ -7,5 +7,9 @@ resource azapi_data_plane_resource "mvnet" {
     properties = {}
   }
 
+  delete_query_parameters = {
+    recursive = tolist(["true"])
+  }
+
   response_export_values = ["*"]
 }
