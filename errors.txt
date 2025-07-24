@@ -1,0 +1,26 @@
+Error: Failed to create/update resource
+
+   with module.purview_mir.azapi_data_plane_resource.mir,
+   on modules/purview-ir/main.tf line 1, in resource "azapi_data_plane_resource" "mir":
+    1: resource azapi_data_plane_resource "mir" {
+
+ creating/updating "Resource: (ResourceId \"leriksen-purview-uiau.purview.azure.com/scan/integrationruntimes/MIR\" / Api Version \"2023-09-01\")": PUT https://leriksen-purview-uiau.purview.azure.com/scan/integrationruntimes/MIR
+ --------------------------------------------------------------------------------
+ RESPONSE 400: 400 Bad Request
+ ERROR CODE: IntegrationRuntime_UserError
+ --------------------------------------------------------------------------------
+ {
+   "error": {
+     "code": "IntegrationRuntime_UserError",
+     "message": "[Activity: ec19f6c9-b616-ab0a-a6f6-c4fa5d6d0772] Unexcpected HTTP Status Code: BadRequest, ErrorCode: None, Message: Number of vnet runtimes cannot exceed the max count 1 under custom_mvnet",
+     "target": null,
+     "details": [
+       {
+         "code": "IntegrationRuntime_UserError",
+         "message": "[Activity: ec19f6c9-b616-ab0a-a6f6-c4fa5d6d0772] Unexcpected HTTP Status Code: BadRequest, ErrorCode: None, Message: Number of vnet runtimes cannot exceed the max count 1 under custom_mvnet",
+         "target": null,
+         "details": null
+       }
+     ]
+   }
+ }
