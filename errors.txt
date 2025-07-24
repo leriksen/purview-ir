@@ -1,26 +1,30 @@
-Error: Failed to create/update resource
+module "purview_mvnet" {
+  source = "./modules/purview-managed-vnets"
+  depends_on = [
+    module.purview_account
+  ]
+  purview_name       = trimprefix(module.purview_account.scan_endpoint, "https://")
+  purview_mvnet_name = "custom_mvnet"
+}
 
-   with module.purview_mir.azapi_data_plane_resource.mir,
-   on modules/purview-ir/main.tf line 1, in resource "azapi_data_plane_resource" "mir":
-    1: resource azapi_data_plane_resource "mir" {
+resource "time_sleep" "mvnet_wait" {
+  depends_on = [
+    module.purview_mvnet
+  ]
+  create_duration = "120s"
+  destroy_duration = "900s"
+}
 
- creating/updating "Resource: (ResourceId \"leriksen-purview-uiau.purview.azure.com/scan/integrationruntimes/MIR\" / Api Version \"2023-09-01\")": PUT https://leriksen-purview-uiau.purview.azure.com/scan/integrationruntimes/MIR
- --------------------------------------------------------------------------------
- RESPONSE 400: 400 Bad Request
- ERROR CODE: IntegrationRuntime_UserError
- --------------------------------------------------------------------------------
- {
-   "error": {
-     "code": "IntegrationRuntime_UserError",
-     "message": "[Activity: ec19f6c9-b616-ab0a-a6f6-c4fa5d6d0772] Unexcpected HTTP Status Code: BadRequest, ErrorCode: None, Message: Number of vnet runtimes cannot exceed the max count 1 under custom_mvnet",
-     "target": null,
-     "details": [
-       {
-         "code": "IntegrationRuntime_UserError",
-         "message": "[Activity: ec19f6c9-b616-ab0a-a6f6-c4fa5d6d0772] Unexcpected HTTP Status Code: BadRequest, ErrorCode: None, Message: Number of vnet runtimes cannot exceed the max count 1 under custom_mvnet",
-         "target": null,
-         "details": null
-       }
-     ]
-   }
- }
+module "purview_mir" {
+  source = "./modules/purview-ir"
+
+  depends_on = [
+    time_sleep.mvnet_wait
+...
+
+time_sleep.mvnet_wait: Still destroying... [id=2025-07-24T05:58:49Z, 14m40s elapsed]
+time_sleep.mvnet_wait: Still destroying... [id=2025-07-24T05:58:49Z, 14m50s elapsed]
+time_sleep.mvnet_wait: Destruction complete after 15m0s
+module.purview_mvnet.azapi_data_plane_resource.mvnet: Destroying... [id=leriksen-purview-bxkd.purview.azure.com/scan/managedvirtualnetworks/custom_mvnet]
+module.purview_mvnet.azapi_data_plane_resource.mvnet: Destruction complete after 2s
+module.purview_account.azurerm_purview_account.account: Destroying... [id=/subscriptions/743b758a-f6e7-4823-b706-950a64a6c9f9/resourceGroups/purview-bxkd/providers/Microsoft.Purview/accounts/leriksen-purview-bxkd]
