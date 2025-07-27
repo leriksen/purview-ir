@@ -11,7 +11,7 @@ output scan_endpoint {
 }
 
 output purview_id {
-  value = "/subscriptions/743b758a-f6e7-4823-b706-950a64a6c9f9/resourceGroups/purview-uwou"
+  value = "/subscriptions/743b758a-f6e7-4823-b706-950a64a6c9f9/resourceGroups/purview-uwou/providers/Microsoft.Purview/accounts/leriksen-purview-uwou"
 }
 
 output purview_managed_storage {
