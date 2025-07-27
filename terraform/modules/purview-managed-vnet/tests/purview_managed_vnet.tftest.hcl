@@ -1,31 +1,10 @@
-# these take a lot of time to run, we will hard code while we do local development
+run "data" {
+  command = apply
 
-# run "rg_provider" {
-#   command = apply
-#
-#   module {
-#     source = "./modules/rg"
-#   }
-#
-#   variables {
-#     name     = "purview-managed-vnet-tftest"
-#     location = "australiaeast"
-#   }
-# }
-#
-# run "purview_account_provider" {
-#   command = apply
-#
-#   module {
-#     source = "./modules/purview-account"
-#   }
-#
-#   variables {
-#     name                = "purview-account-tftest"
-#     resource_group_name = run.rg_provider.rg.name
-#     location            = run.rg_provider.rg.location
-#   }
-# }
+  module {
+    source = "./modules/data"
+  }
+}
 
 run "test_purview_managed_vnet" {
   command = apply
@@ -37,8 +16,7 @@ run "test_purview_managed_vnet" {
   variables {
 
 
-    # purview_name       = trimprefix(run.purview_account_provider.scan_endpoint, "https://")
-    purview_name       = trimprefix("https://leriksen-purview-uwou.purview.azure.com/scan", "https://")
+    purview_name       = run.data.scan_endpoint
     purview_mvnet_name = "custom_vnet"
   }
 
