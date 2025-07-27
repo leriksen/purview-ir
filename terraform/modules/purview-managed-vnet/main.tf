@@ -13,3 +13,8 @@ resource azapi_data_plane_resource "mvnet" {
 
   response_export_values = ["*"]
 }
+
+# prevent errors when rapidly cycling a mvnet, especially in testing
+resource time_sleep "mvnet_provisioning" {
+  create_duration = var.create_delay
+}
