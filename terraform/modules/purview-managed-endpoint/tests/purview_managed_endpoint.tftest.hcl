@@ -32,6 +32,47 @@ run "adls" {
   }
 }
 
+run "kv" {
+  command = apply
+
+  module {
+    source = "./modules/kv"
+  }
+
+  variables {
+    resource_group_name = run.data.resource_group_name
+    location            = run.data.location
+    tenant_id           = run.data.config.tenant_id
+  }
+}
+
+run "cosmosdb" {
+  command = apply
+
+  module {
+    source = "./modules/cosmosdb"
+  }
+
+  variables {
+    resource_group_name = run.data.resource_group_name
+    location            = run.data.location
+  }
+}
+
+run "synapse" {
+  command = apply
+
+  module {
+    source = "./modules/synapse"
+  }
+
+  variables {
+    resource_group_name = run.data.resource_group_name
+    location            = run.data.location
+    adls_id             = run.adls.resource_id
+  }
+}
+
 run "test_purview_managed_pe_adls" {
   command = apply
 
@@ -46,6 +87,72 @@ run "test_purview_managed_pe_adls" {
     resource_id      = run.adls.resource_id
     subresource      = "dfs"
     resource_kind    = "sa"
+  }
+
+  assert {
+    condition     = azapi_data_plane_resource.managed_pe != null
+    error_message = "invalid purview_managed_endpoint target output"
+  }
+}
+
+run "test_purview_managed_kv" {
+  command = apply
+
+  module {
+    source = "../"
+  }
+
+  variables {
+    name             = "kv"
+    purview_endpoint = run.data.scan_endpoint
+    mvnet_name       = "custom_vnet"
+    resource_id      = run.kv.resource_id
+    subresource      = "vault"
+    resource_kind    = "kv"
+  }
+
+  assert {
+    condition     = azapi_data_plane_resource.managed_pe != null
+    error_message = "invalid purview_managed_endpoint target output"
+  }
+}
+
+run "test_purview_managed_pe_cosmosdb" {
+  command = apply
+
+  module {
+    source = "../"
+  }
+
+  variables {
+    name             = "cosmosdb"
+    purview_endpoint = run.data.scan_endpoint
+    mvnet_name       = "custom_vnet"
+    resource_id      = run.cosmosdb.resource_id
+    subresource      = "SQL"
+    resource_kind    = "cosmosdb"
+  }
+
+  assert {
+    condition     = azapi_data_plane_resource.managed_pe != null
+    error_message = "invalid purview_managed_endpoint target output"
+  }
+}
+
+run "test_purview_managed_pe_synapse" {
+  command = apply
+
+  module {
+    source = "../"
+  }
+
+  variables {
+    name             = "synapse"
+    purview_endpoint = run.data.scan_endpoint
+    mvnet_name       = "custom_vnet"
+    resource_id      = run.synapse.resource_id
+    subresource      = "SqlOnDemand"
+    resource_kind    = "synapse"
   }
 
   assert {

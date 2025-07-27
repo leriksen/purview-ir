@@ -9,3 +9,7 @@ output location {
 output scan_endpoint {
   value = "leriksen-purview-uwou.purview.azure.com/scan"
 }
+
+output config {
+  value = data.azurerm_client_config.current
+}

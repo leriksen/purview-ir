@@ -32,7 +32,7 @@ module "purview_account" {
 #
 #   purview_endpoint        = local.purview_endpoint
 #   purview_id              = module.purview_account.id
-#   purview_managed_storage = module.purview_account.managed_resources[0].storage_account_id
+#   purview_managed_storage = module.purview_account.managed_resources.storage_account_id
 #   kind                    = "Managed"
 #   ir_name                 = "MIR"
 #   mvnet_reference         = module.purview_mvnet.mvnet.name

@@ -27,7 +27,7 @@ resource azapi_data_plane_resource "mir" {
 #
 # create and approve purview account private endpoint connection
 module "account_pe" {
-  source = "../purview-managed-endpoint"
+  source = "./modules/purview-managed-endpoint"
 
   depends_on = [
     azapi_data_plane_resource.mir,
@@ -42,7 +42,7 @@ module "account_pe" {
 
 # create and approve purview managed storage account blob private endpoint connection
 module "storage_blob_pe" {
-  source = "../purview-managed-endpoint"
+  source = "./modules/purview-managed-endpoint"
 
   depends_on = [
     azapi_data_plane_resource.mir,
@@ -57,7 +57,7 @@ module "storage_blob_pe" {
 
 # create and approve purview managed storage account queue account private endpoint connection
 module "storage_queue_pe" {
-  source = "../purview-managed-endpoint"
+  source = "./modules/purview-managed-endpoint"
 
   depends_on = [
     azapi_data_plane_resource.mir,
