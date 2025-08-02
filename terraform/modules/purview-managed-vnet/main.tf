@@ -14,7 +14,17 @@ resource azapi_data_plane_resource "mvnet" {
   response_export_values = ["*"]
 }
 
-# prevent errors when rapidly cycling a mvnet, especially in testing
-resource time_sleep "mvnet_provisioning" {
-  create_duration = var.create_delay
+resource time_sleep mvnet_provisioning {
+  depends_on = [
+    azapi_data_plane_resource.mvnet
+  ]
+
+  create_duration = var.create_duration
+}
+
+resource terraform_data provisioning_completed {
+  depends_on = [
+    time_sleep.mvnet_provisioning
+  ]
+  input = azapi_data_plane_resource.mvnet.output.name
 }

@@ -1,3 +1,3 @@
-output "mvnet" {
-  value = azapi_data_plane_resource.mvnet.output
+output "name" {
+  value = terraform_data.provisioning_completed.output
 }
