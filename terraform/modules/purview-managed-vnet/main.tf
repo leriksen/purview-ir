@@ -21,10 +21,3 @@ resource time_sleep mvnet_provisioning {
 
   create_duration = var.create_duration
 }
-
-resource terraform_data provisioning_completed {
-  depends_on = [
-    time_sleep.mvnet_provisioning
-  ]
-  input = azapi_data_plane_resource.mvnet.output.name
-}

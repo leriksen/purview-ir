@@ -1,3 +1,7 @@
 output "name" {
-  value = terraform_data.provisioning_completed.output
+  depends_on = [
+    time_sleep.mvnet_provisioning
+  ]
+
+  value = azapi_data_plane_resource.mvnet.output.name
 }
