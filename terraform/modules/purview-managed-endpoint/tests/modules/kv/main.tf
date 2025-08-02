@@ -1,5 +1,5 @@
 resource "azurerm_key_vault" "kv" {
-  name                     = format("%s%s", "lepurviewkv01", "jtrb")
+  name                     = format("%s%s", "lepurviewkv01", "zdha")
   resource_group_name      = var.resource_group_name
   location                 = var.location
   sku_name                 = "standard"

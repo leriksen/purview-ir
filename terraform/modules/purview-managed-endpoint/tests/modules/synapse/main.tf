@@ -5,7 +5,7 @@ resource "azurerm_storage_data_lake_gen2_filesystem" "adls" {
 
 resource "azurerm_synapse_workspace" "synapse" {
   location                             = var.location
-  name                                 = format("%s%s", "leriksenpurviewsynapse01", "jtrb")
+  name                                 = format("%s%s", "leriksenpurviewsynapse01", "zdha")
   resource_group_name                  = var.resource_group_name
   storage_data_lake_gen2_filesystem_id = azurerm_storage_data_lake_gen2_filesystem.adls.id
   sql_administrator_login              = "sqladminuser"
