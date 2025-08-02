@@ -1,5 +1,5 @@
 output resource_group_name {
-  value = "purview-uwou"
+  value = "purview-jtrb"
 }
 
 output location {
@@ -7,11 +7,11 @@ output location {
 }
 
 output scan_endpoint {
-  value = "leriksen-purview-uwou.purview.azure.com/scan"
+  value = "leriksen-purview-jtrb.purview.azure.com/scan"
 }
 
 output purview_id {
-  value = "/subscriptions/743b758a-f6e7-4823-b706-950a64a6c9f9/resourceGroups/purview-uwou/providers/Microsoft.Purview/accounts/leriksen-purview-uwou"
+  value = "/subscriptions/743b758a-f6e7-4823-b706-950a64a6c9f9/resourceGroups/purview-jtrb/providers/Microsoft.Purview/accounts/leriksen-purview-jtrb"
 }
 
 output purview_managed_storage {

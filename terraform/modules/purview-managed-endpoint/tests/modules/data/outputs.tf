@@ -1,5 +1,5 @@
 output resource_group_name {
-  value = "purview-uwou"
+  value = "purview-jtrb"
 }
 
 output location {
@@ -7,7 +7,7 @@ output location {
 }
 
 output scan_endpoint {
-  value = "leriksen-purview-uwou.purview.azure.com/scan"
+  value = "leriksen-purview-jtrb.purview.azure.com/scan"
 }
 
 output config {

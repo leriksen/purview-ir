@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "adls" {
-  name                     = format("%s%s", "lepurviewadls01", "uwou")
+  name                     = format("%s%s", "lepurviewadls01", "jtrb")
   resource_group_name      = var.resource_group_name
   location                 = var.location
   account_tier             = "Standard"

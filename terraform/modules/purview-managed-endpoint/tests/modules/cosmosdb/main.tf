@@ -1,6 +1,6 @@
 resource "azurerm_cosmosdb_account" "cosmos" {
   location            = var.location
-  name                = format("%s%s", "leriksenpurviewcosmos01", "uwou")
+  name                = format("%s%s", "leriksenpurviewcosmos01", "jtrb")
   offer_type          = "Standard"
   resource_group_name = var.resource_group_name
   identity {
