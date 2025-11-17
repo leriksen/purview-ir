@@ -4,6 +4,7 @@ variable "purview_name" {
 
 variable "purview_mvnet_name" {
   type = string
+  default = "defaultv2"
 }
 
 variable create_duration {

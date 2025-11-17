@@ -1,6 +1,6 @@
 resource azapi_data_plane_resource "mvnet" {
   name      = var.purview_mvnet_name
-  parent_id = var.purview_name
+  parent_id = local.purview_endpoint
   type      = "Microsoft.Purview/accounts/Scanning/managedvirtualnetworks@2023-09-01"
 
   body = {
@@ -12,6 +12,12 @@ resource azapi_data_plane_resource "mvnet" {
   }
 
   response_export_values = ["*"]
+
+  retry = {
+    error_message_regex = [
+      "ManagedVirtualNetwork not found"
+    ]
+  }
 }
 
 resource time_sleep mvnet_provisioning {

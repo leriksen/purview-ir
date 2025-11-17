@@ -11,34 +11,25 @@ module "purview_mvnet" {
   depends_on = [
     module.purview_account
   ]
-  purview_name       = trimprefix(module.purview_account.scan_endpoint, "https://")
-  purview_mvnet_name = "custom_mvnet"
+  purview_name       = module.purview_account.scan_endpoint
 }
 
-
-resource "time_sleep" "mvnet_wait" {
-  depends_on = [
-    module.purview_mvnet
-  ]
-  create_duration = "660s"
-}
-
-module "purview_mir" {
-  source                      = "./modules/purview-managed-ir"
-  purview_endpoint            = local.purview_endpoint
-  purview_id                  = module.purview_account.id
-  purview_managed_storage     = module.purview_account.managed_resources[0].storage_account_id
-  kind                        = "Managed"
-  ir_name                     = "MIR"
-  mvnet_reference             = module.purview_mvnet.name
-}
-
-resource "time_sleep" "mir_wait" {
-  depends_on = [
-    module.purview_mir
-  ]
-  create_duration = "660s"
-}
+# module "purview_mir" {
+#   source                      = "./modules/purview-managed-ir"
+#   purview_endpoint            = local.purview_endpoint
+#   purview_id                  = module.purview_account.id
+#   purview_managed_storage     = module.purview_account.managed_resources[0].storage_account_id
+#   kind                        = "Managed"
+#   ir_name                     = "MIR"
+#   mvnet_reference             = module.purview_mvnet.name
+# }
+#
+# resource "time_sleep" "mir_wait" {
+#   depends_on = [
+#     module.purview_mir
+#   ]
+#   create_duration = "660s"
+# }
 
 # module "purview_adls_pe" {
 #   depends_on = [
