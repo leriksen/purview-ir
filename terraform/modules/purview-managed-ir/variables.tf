@@ -29,3 +29,8 @@ variable mvnet_reference {
   type    = string
   default = null
 }
+
+variable create_duration {
+  type    = string
+  default = "660s"
+}

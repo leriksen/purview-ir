@@ -17,6 +17,13 @@ resource azapi_data_plane_resource "mir" {
   response_export_values = ["*"]
 }
 
+resource "time_sleep" "mir_wait" {
+  depends_on = [
+    azapi_data_plane_resource.mir
+  ]
+  create_duration = var.create_duration
+}
+
 # after a Managed IR is created, it requires that the following private endpoints
 # are added to the Managed Virtual Network
 # - purview account
@@ -30,7 +37,7 @@ module "account_pe" {
   source = "./modules/purview-managed-endpoint"
 
   depends_on = [
-    azapi_data_plane_resource.mir,
+    time_sleep.mir_wait
   ]
   purview_endpoint = var.purview_endpoint
   mvnet_name       = var.mvnet_reference

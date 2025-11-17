@@ -14,22 +14,15 @@ module "purview_mvnet" {
   purview_name       = module.purview_account.scan_endpoint
 }
 
-# module "purview_mir" {
-#   source                      = "./modules/purview-managed-ir"
-#   purview_endpoint            = local.purview_endpoint
-#   purview_id                  = module.purview_account.id
-#   purview_managed_storage     = module.purview_account.managed_resources[0].storage_account_id
-#   kind                        = "Managed"
-#   ir_name                     = "MIR"
-#   mvnet_reference             = module.purview_mvnet.name
-# }
-#
-# resource "time_sleep" "mir_wait" {
-#   depends_on = [
-#     module.purview_mir
-#   ]
-#   create_duration = "660s"
-# }
+module "purview_mir" {
+  source                      = "./modules/purview-managed-ir"
+  purview_endpoint            = local.purview_endpoint
+  purview_id                  = module.purview_account.id
+  purview_managed_storage     = module.purview_account.managed_resources[0].storage_account_id
+  kind                        = "Managed"
+  ir_name                     = "MIR"
+  mvnet_reference             = module.purview_mvnet.name
+}
 
 # module "purview_adls_pe" {
 #   depends_on = [
@@ -70,16 +63,16 @@ module "purview_mvnet" {
 #   resource_kind    = "cosmosdb"
 #   subresource      = "SQL"
 # }
-#
-# module "purview_synapse_pe" {
-#   depends_on = [
-#     time_sleep.mir_wait
-#   ]
-#   source           = "./modules/purview-managed-endpoint"
-#   purview_endpoint = local.purview_endpoint
-#   mvnet_name       = module.purview_mvnet.name
-#   name             = "synapse"
-#   resource_id      = azurerm_synapse_workspace.synapse.id
-#   resource_kind    = "synapse"
-#   subresource      = "SqlOnDemand"
-# }
+
+module "purview_synapse_pe" {
+  depends_on = [
+    module.purview_mir
+  ]
+  source           = "./modules/purview-managed-endpoint"
+  purview_endpoint = local.purview_endpoint
+  mvnet_name       = module.purview_mvnet.name
+  name             = "synapse"
+  resource_id      = azurerm_synapse_workspace.synapse.id
+  resource_kind    = "synapse"
+  subresource      = "SqlOnDemand"
+}
