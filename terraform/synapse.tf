@@ -13,3 +13,11 @@ resource "azurerm_synapse_workspace" "synapse" {
     type = "SystemAssigned"
   }
 }
+
+resource "azurerm_synapse_sql_pool" "dedicated" {
+  name                 = format("%ssqlpool", azurerm_synapse_workspace.synapse.name)
+  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
+  sku_name             = "DW100c"
+  create_mode          = "Default"
+  storage_account_type = "GRS"
+}

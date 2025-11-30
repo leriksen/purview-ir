@@ -64,15 +64,30 @@ module "purview_mir" {
 #   subresource      = "SQL"
 # }
 
-module "purview_synapse_pe" {
+module "purview_synapse_pe_serverless" {
   depends_on = [
-    module.purview_mir
+    module.purview_mir,
+    azurerm_synapse_workspace.synapse
   ]
   source           = "./modules/purview-managed-endpoint"
   purview_endpoint = local.purview_endpoint
   mvnet_name       = module.purview_mvnet.name
-  name             = "synapse"
+  name             = "synapse-serverless"
   resource_id      = azurerm_synapse_workspace.synapse.id
   resource_kind    = "synapse"
   subresource      = "SqlOnDemand"
+}
+
+module "purview_synapse_pe_dedicated" {
+  depends_on = [
+    module.purview_mir,
+    azurerm_synapse_sql_pool.dedicated
+  ]
+  source           = "./modules/purview-managed-endpoint"
+  purview_endpoint = local.purview_endpoint
+  mvnet_name       = module.purview_mvnet.name
+  name             = "synapse-dedicated"
+  resource_id      = azurerm_synapse_workspace.synapse.id
+  resource_kind    = "synapse"
+  subresource      = "Sql"
 }
