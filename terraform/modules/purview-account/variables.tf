@@ -9,3 +9,7 @@ variable "resource_group_name" {
 variable "location" {
   type = string
 }
+
+variable "root_collection_object_id" {
+  type = string
+}

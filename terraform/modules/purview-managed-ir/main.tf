@@ -37,7 +37,7 @@ module "account_pe" {
   source = "./modules/purview-managed-endpoint"
 
   depends_on = [
-    time_sleep.mir_wait
+    # time_sleep.mir_wait
   ]
   purview_endpoint = var.purview_endpoint
   mvnet_name       = var.mvnet_reference
