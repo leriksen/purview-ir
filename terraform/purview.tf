@@ -28,32 +28,29 @@ module "purview_mir" {
   mvnet_reference             = module.purview_mvnet.name
 }
 
-# module "purview_adls_pe" {
+module "purview_adls_pe" {
+  source           = "./modules/purview-managed-endpoint"
+  purview_endpoint = local.purview_endpoint
+  mvnet_name       = module.purview_mvnet.name
+  name             = "adls"
+  resource_id      = azurerm_storage_account.adls.id
+  resource_kind    = "sa"
+  subresource      = "dfs"
+}
+
+# key vaults have a different schema for representing their PE approval requests....
+# module "purview_kv_pe" {
 #   depends_on = [
-#     time_sleep.mir_wait
+#     module.purview_mir
 #   ]
 #   source           = "./modules/purview-managed-endpoint"
 #   purview_endpoint = local.purview_endpoint
 #   mvnet_name       = module.purview_mvnet.name
-#   name             = "adls"
-#   resource_id      = azurerm_storage_account.adls.id
-#   resource_kind    = "sa"
-#   subresource      = "dfs"
+#   name             = "kv"
+#   resource_id      = azurerm_key_vault.kv.id
+#   resource_kind    = "kv"
+#   subresource      = "vault"
 # }
-
-# key vaults have a different schema for representing their PE approval requests....
-module "purview_kv_pe" {
-  depends_on = [
-    module.purview_mir
-  ]
-  source           = "./modules/purview-managed-endpoint"
-  purview_endpoint = local.purview_endpoint
-  mvnet_name       = module.purview_mvnet.name
-  name             = "kv"
-  resource_id      = azurerm_key_vault.kv.id
-  resource_kind    = "kv"
-  subresource      = "vault"
-}
 
 # module "purview_cosmos_pe" {
 #   depends_on = [
@@ -82,16 +79,16 @@ module "purview_kv_pe" {
 #   subresource      = "SqlOnDemand"
 # }
 #
-# module "purview_synapse_pe_dedicated" {
-#   depends_on = [
-#     module.purview_mir,
-#     azurerm_synapse_sql_pool.dedicated
-#   ]
-#   source           = "./modules/purview-managed-endpoint"
-#   purview_endpoint = local.purview_endpoint
-#   mvnet_name       = module.purview_mvnet.name
-#   name             = "synapse-dedicated"
-#   resource_id      = azurerm_synapse_workspace.synapse.id
-#   resource_kind    = "synapse"
-#   subresource      = "Sql"
-# }
+module "purview_synapse_pe_dedicated" {
+  depends_on = [
+    module.purview_mir,
+    azurerm_synapse_sql_pool.dedicated
+  ]
+  source           = "./modules/purview-managed-endpoint"
+  purview_endpoint = local.purview_endpoint
+  mvnet_name       = module.purview_mvnet.name
+  name             = "synapse-dedicated"
+  resource_id      = azurerm_synapse_workspace.synapse.id
+  resource_kind    = "synapse"
+  subresource      = "sql"
+}

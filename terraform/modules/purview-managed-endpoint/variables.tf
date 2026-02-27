@@ -60,6 +60,7 @@ variable subresource {
             contains(
               [
                 "Sql",
+                "sql",
                 "SqlOnDemand",
                 "Dev",
               ],

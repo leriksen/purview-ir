@@ -1,4 +1,7 @@
 output "result" {
+  depends_on = [
+    time_sleep.mir_wait
+  ]
   value = azapi_data_plane_resource.mir.output
 }
 
